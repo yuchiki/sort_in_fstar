@@ -4,6 +4,7 @@ EXE=main
 
 .phony: execute check clean
 
+FSTAR=fstar.exe
 SRC=Myprint Totalorder Sort Insertionsort Main
 FST_SRC=$(addsuffix .fst, $(SRC))
 OCAML_SRC_BASE=$(addprefix OCaml/, $(SRC))
@@ -19,10 +20,10 @@ OCaml/%.cmx: OCaml/%.ml
 	$(OCAMLOPT) -I ./OCaml -c $<
 
 OCaml/%.ml: $(FST_SRC)
-	fstar.exe $^ --codegen OCaml --odir OCaml
+	$(FSTAR) $^ --codegen OCaml --odir OCaml
 
 check: $(FST_SRC)
-	fstar.exe $^
+	$(FSTAR) $^
 
 clean:
 	- rm -rf OCaml
