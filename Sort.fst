@@ -1,8 +1,7 @@
 module Sort
 
-open TotalOrder
+open Totalorder
 
-(* definition of sort type*)
 val sorted : #a:eqtype -> totalOrder #a -> list a -> Tot bool
 let rec sorted #a leq l =
     match l with

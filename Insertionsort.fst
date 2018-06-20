@@ -1,9 +1,8 @@
-module InsertionSort
+module Insertionsort
 
-open TotalOrder
+open Totalorder
 open Sort
 
-(* definition of insertion_sort *)
 val min : #a:eqtype -> leq:totalOrder #a -> l:list a{Cons? l} -> Tot a
 let rec min #a leq l =
     match l with

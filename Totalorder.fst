@@ -1,6 +1,5 @@
-module TotalOrder
+module Totalorder
 
-(* definition of a total order *)
 type relation 'a = 'a -> 'a -> Tot bool
 
 type isReflexive (#a:Type) (rel:relation a) = forall x. rel x x

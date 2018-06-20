@@ -1,23 +1,28 @@
 include makefile.include
 
-FST=main.fst
+EXE=main
 
-.phony: all ocaml FSharp check clean
+.phony: execute check clean
 
-.phony: execute
-execute: OCaml/Hoge.ml
-	$(OCAMLOPT) OCaml/Hoge.ml -o this_must_be_executable
-	./this_must_be_executable
+SRC=Myprint Totalorder Sort Insertionsort Main
+FST_SRC=$(addsuffix .fst, $(SRC))
+OCAML_SRC_BASE=$(addprefix OCaml/, $(SRC))
+OCAML_CMX=$(addsuffix .cmx, $(OCAML_SRC_BASE))
 
-OCaml/main.ml: $(FST)
+execute: OCaml/$(EXE)
+	OCaml/$(EXE)
+
+OCaml/$(EXE): $(OCAML_CMX)
+	$(OCAMLOPT) -I ./OCaml -o OCaml/$(EXE) $^
+
+OCaml/%.cmx: OCaml/%.ml
+	$(OCAMLOPT) -I ./OCaml -c $<
+
+OCaml/%.ml: $(FST_SRC)
 	fstar.exe $^ --codegen OCaml --odir OCaml
 
-.phony: check
-check: $(FST)
+check: $(FST_SRC)
 	fstar.exe $^
 
-FSharp: $(FST)
-	fstar.exe $^ --codegen $@ --odir $@
-
 clean:
-	- rm -rf OCaml FSharp
+	- rm -rf OCaml
