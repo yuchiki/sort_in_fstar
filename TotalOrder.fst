@@ -1,4 +1,4 @@
-module Totalorder
+module TotalOrder
 
 type relation 'a = 'a -> 'a -> Tot bool
 

@@ -1,6 +1,6 @@
-module Insertionsort
+module InsertionSort
 
-open Totalorder
+open TotalOrder
 open Sort
 
 val min : #a:eqtype -> leq:totalOrder #a -> l:list a{Cons? l} -> Tot a

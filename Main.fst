@@ -5,8 +5,8 @@ open FStar.IO
 open FStar.String
 
 open Sort
-open Insertionsort
-open Myprint
+open InsertionSort
+open MyPrint
 
 val input : list int
 let input = [3; 1; 4; 1; 5; 9; 2; 6; 5]

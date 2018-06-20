@@ -1,4 +1,4 @@
-module Myprint
+module MyPrint
 
 open FStar.All
 open FStar.IO
