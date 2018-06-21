@@ -32,5 +32,3 @@ type sortedList (#a:eqtype) (leq:totalOrder #a) = ls:list a{sorted leq ls}
 
 type sortOf (#a:eqtype) (leq:totalOrder #a) (l:list a)
     = ret:sortedList leq{isPermutation l ret}
-
-type sort = #a:eqtype -> leq:totalOrder #a -> l:list a -> ret:sortOf #a leq l

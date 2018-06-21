@@ -3,13 +3,14 @@ module InsertionSort
 open TotalOrder
 open Sort
 
+val smaller : #a:eqtype -> leq:totalOrder #a -> a -> a -> a
+let smaller #a leq x y = if leq x y then x else y
+
 val min : #a:eqtype -> leq:totalOrder #a -> l:list a{Cons? l} -> Tot a
 let rec min #a leq l =
     match l with
     | [x] -> x
-    | x::xs ->
-        let m = min leq xs in
-        if leq x m then x else m
+    | x::xs -> smaller leq x (min leq xs)
 
 val head_is_min : #a:eqtype -> leq:totalOrder #a -> l:sortedList leq{Cons? l} ->
     Lemma (Cons?.hd l = min leq l)
@@ -29,12 +30,12 @@ let rec insert #a leq x l =
     | [] -> [x]
     | y :: ys ->
         if leq x y
-            then x :: y :: ys
+            then x :: l
             else
                 let zs : sortedList leq = insert leq x ys in
                 if Nil? ys
                     then assert (min leq zs = x)
-                    else head_is_min leq (y::ys);
+                    else head_is_min leq l;
                 y :: zs
 
 
@@ -48,14 +49,8 @@ let rec insert_is_inverse_of_deleteOne #a leq x xs =
     | y::ys -> if x = y then () else insert_is_inverse_of_deleteOne leq x ys
 
 
-val insertionSort :
-    #a:eqtype ->
-    leq:totalOrder #a ->
-    l:list a ->
-    ret: sortOf leq l
+val insertionSort : #a:eqtype -> leq:totalOrder #a -> l:list a -> sortOf leq l
 let rec insertionSort #a leq ls =
     match ls with
     | [] -> []
-    | x::xs ->
-        let ih = insertionSort leq xs in
-        insert leq x ih
+    | x::xs -> insert leq x (insertionSort leq xs)
