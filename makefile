@@ -1,6 +1,6 @@
 include makefile.include
 
-.phony: execute check clean
+.phony: execute check clean depend
 
 FSTAR := fstar.exe
 ML_DIR := ml
@@ -42,7 +42,6 @@ clean:
 depend: .depend
 
 include .depend
-
 
 verify-all: $(addsuffix .checked, $(FST_SRC))
 

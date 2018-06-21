@@ -37,12 +37,16 @@ let rec insert #a leq x l =
                     else head_is_min leq (y::ys);
                 y :: zs
 
+
+
 val insert_is_inverse_of_deleteOne : #a:eqtype -> leq:totalOrder #a -> x:a -> xs:sortedList leq ->
     Lemma (deleteOne x (insert leq x xs) = xs)
+    [SMTPat (insert leq x xs)]
 let rec insert_is_inverse_of_deleteOne #a leq x xs =
     match xs with
     | [] -> ()
     | y::ys -> if x = y then () else insert_is_inverse_of_deleteOne leq x ys
+
 
 val insertionSort :
     #a:eqtype ->
@@ -54,6 +58,4 @@ let rec insertionSort #a leq ls =
     | [] -> []
     | x::xs ->
         let ih = insertionSort leq xs in
-        assert (sorted leq ih);
-        insert_is_inverse_of_deleteOne leq x ih;
         insert leq x ih
